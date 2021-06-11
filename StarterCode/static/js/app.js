@@ -1,6 +1,23 @@
+function metaData(x){
+    let dashboard = d3.select("#sample_metadata");
+    dashboard.html("");
 
-function fillCharts(){
+    d3.json("samples.json").then((data)=>{
+        let variable = data.metadata;
+        let metaList = variable.filter(dataX => dataX.id == x);
+        let meta = metaList[0];
+        Object.entries(meta).forEach(([key, value]) => {
+            dashboard.append("h6").text(`${key} ${value}`);
+        });
+    });
+}
+
+function fillCharts(x){
     d3.json("samples.json").then((data) => {
+
+        let sampleData = data.samples;
+        let sampleList = sampleData.filter(sampleX => sampleX.id == x);
+        let sample = sampleList[0];
 
         let value = sample.sample_values;
         let id = sample.otu_ids;
@@ -65,8 +82,9 @@ function initial(){
 
 }
 
-function changeOption(){
-    fillCharts();
+function changeOption(x){
+    metaData(x);
+    fillCharts(x);
 }
 
 initial();
