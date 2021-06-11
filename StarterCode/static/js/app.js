@@ -19,8 +19,29 @@ let bar_chart = [chart];
 
 let barChart = {
     title: "10 most founded bacteria",
-    xaxis: {title: "Values"},
+    xaxis: {title: "Samples Values"},
     yaxis: {title: "Bacteria ID"}
 }
 
-Plotly.newPlot("bar", bar_data, barLayout )
+Plotly.newPlot("bar", bar_data, barLayout)
+
+
+let bubbles = {
+    x: id,
+    y: value,
+    text: label,
+    mode: "markers",
+    marker: {
+        color: id,
+        size: value
+    }
+}
+
+let bubble_chart = [bubbles];
+
+let bubbleChart = {
+    xaxis: {title: "Bacteria IDs"},
+    yaxis: {title: "Samples Values"}
+}
+
+Plotly.newPlot("bubble", bubbles, bubbleChart)
