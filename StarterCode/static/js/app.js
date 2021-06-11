@@ -45,3 +45,14 @@ let bubbleChart = {
 }
 
 Plotly.newPlot("bubble", bubbles, bubbleChart)
+
+let dropMenu = d3.select("#selDataset");
+
+d3.json("samples.json").then(function(data){
+    let optionId = data.names;
+    optionId.forEach(value => {
+        dropMenu.append("option").text(value).property("value", value)
+    });
+
+    
+});
