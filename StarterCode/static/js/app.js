@@ -1,12 +1,12 @@
 function metaData(x){
-    var panel = d3.select("#sample-metadata");
+    let panel = d3.select("#sample-metadata");
     panel.html("");
     d3.json("samples.json").then((data)=>{
-        var variable = data.metadata;
-        var metaList = variable.filter(dataX => dataX.id == x);
-        var meta = metaList[0];
-        Object.entries(meta).forEach(([key, value]) => {
-            panel.append("h6").text(`${key}   ${value}`);
+        let variable = data.metadata;
+        let metaList = variable.filter(dataX => dataX.id == x);
+        let meta = metaList[0];
+        Object.entries(meta).forEach(([key,value]) => {
+            panel.append("h6").text(`${key} ${value}`);
         });
     });
 }
@@ -14,15 +14,15 @@ function metaData(x){
 function fillCharts(x){
     d3.json("samples.json").then((data) => {
 
-        var sampleData = data.samples;
-        var sampleList = sampleData.filter(sampleX => sampleX.id == x);
-        var sample = sampleList[0];
+        let sampleData = data.samples;
+        let sampleList = sampleData.filter(sampleX => sampleX.id == x);
+        let sample = sampleList[0];
 
-        var value = sample.sample_values;
-        var id = sample.otu_ids;
-        var label = sample.otu_labels;
+        let value = sample.sample_values;
+        let id = sample.otu_ids;
+        let label = sample.otu_labels;
 
-        var chart = {
+        let chart = {
             x: id.slice(0, 10).map(OTU => ` OTU-${OTU}`),
             y: value.slice(0, 10),
             text: label.slice(0, 10),
@@ -32,9 +32,9 @@ function fillCharts(x){
             type:"bar"
         }
 
-        var bar_chart = [chart];
+        let bar_chart = [chart];
 
-        var barChart = {
+        let barChart = {
             title: "10 most founded bacteria",
             xaxis: {title: "Samples Values"},
             yaxis: {title: "Bacteria ID"},
@@ -44,7 +44,7 @@ function fillCharts(x){
         Plotly.newPlot("bar", bar_chart, barChart)
 
 
-        var bubbles = {
+        let bubbles = {
             x: id,
             y: value,
             text: label,
@@ -55,36 +55,36 @@ function fillCharts(x){
             }
         }
 
-        var bubble_chart = [bubbles];
+        let bubble_chart = [bubbles];
 
-        var bubbleChart = {
+        let bubbleChart = {
             xaxis: {title: "Bacteria IDs"},
             yaxis: {title: "Samples Values"}
         };
 
-        Plotly.plot("bubble", bubble_chart, bubbleChart);
+        Plotly.newPlot("bubble", bubble_chart, bubbleChart);
 
     });
 
 }
 
 function initial(){
-    var dropMenu = d3.select("#selDataset");
+    let dropMenu = d3.select("#selDataset");
 
     d3.json("samples.json").then((data) => {
-        var optionId = data.names;
+        let optionId = data.names;
         optionId.forEach(element => {
             dropMenu.append("option").text(element).property("value", element)
         });
         
-        var firstRecord = optionId[0];
+        let firstRecord = optionId[0];
         metaData(firstRecord);
         fillCharts(firstRecord);
     });
 
 }
 
-function changeOption(x){
+function optionChanged(x){
     metaData(x);
     fillCharts(x);
 }
