@@ -62,7 +62,7 @@ function fillCharts(x){
             yaxis: {title: "Samples Values"}
         };
 
-        Plotly.plot("bubble", bubbles, bubbleChart)
+        Plotly.plot("bubble", bubble_chart, bubbleChart);
 
     });
 
